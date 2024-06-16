@@ -1,8 +1,14 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LevelController;
+use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\POSController;
+use App\Http\Controllers\SalesController;
+use App\Http\Controllers\StokController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
@@ -47,6 +53,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [WelcomeController::class, 'index']);
 
+
+// User Route
 Route::group(['prefix' => 'user'], function() {
     Route::get('/', [UserController::class, 'index']);
     Route::post('/list', [UserController::class, 'list']);
@@ -56,4 +64,82 @@ Route::group(['prefix' => 'user'], function() {
     Route::get('/{id}/edit', [UserController::class, 'edit']);
     Route::put('/{id}', [UserController::class, 'update']);
     Route::delete('/{id}', [UserController::class, 'destroy']);
+});
+
+// Level Route
+Route::group(['prefix' => 'level'], function() {
+    Route::get('/', [LevelController::class, 'index']);
+    Route::post('/list', [LevelController::class, 'list']);
+    Route::get('/create', [LevelController::class, 'create']);
+    Route::post('/', [LevelController::class, 'store']);
+    Route::get('/{id}', [LevelController::class, 'show']);
+    Route::get('/{id}/edit', [LevelController::class, 'edit']);
+    Route::put('/{id}', [LevelController::class, 'update']);
+    Route::delete('/{id}', [levelController::class, 'destroy']);
+});
+
+// Category Route
+Route::group(['prefix' => 'category'], function() {
+    Route::get('/', [KategoriController::class, 'index']);
+    Route::post('/list', [KategoriController::class, 'list']);
+    Route::get('/create', [KategoriController::class, 'create']);
+    Route::post('/', [KategoriController::class, 'store']);
+    Route::get('/{id}', [KategoriController::class, 'show']);
+    Route::get('/{id}/edit', [KategoriController::class, 'edit']);
+    Route::put('/{id}', [KategoriController::class, 'update']);
+    Route::delete('/{id}', [KategoriController::class, 'destroy']);
+});
+
+// Item Route
+Route::group(['prefix' => 'item'], function() {
+    Route::get('/', [ItemController::class, 'index']);
+    Route::post('/list', [ItemController::class, 'list']);
+    Route::get('/create', [ItemController::class, 'create']);
+    Route::post('/', [ItemController::class, 'store']);
+    Route::get('/{id}', [ItemController::class, 'show']);
+    Route::get('/{id}/edit', [ItemController::class, 'edit']);
+    Route::put('/{id}', [ItemController::class, 'update']);
+    Route::delete('/{id}', [ItemController::class, 'destroy']);
+});
+
+// Stok Route
+Route::group(['prefix' => 'stok'], function() {
+    Route::get('/', [StokController::class, 'index']);
+    Route::post('/list', [StokController::class, 'list']);
+    Route::get('/create', [StokController::class, 'create']);
+    Route::post('/', [StokController::class, 'store']);
+    Route::get('/{id}', [StokController::class, 'show']);
+    Route::get('/{id}/edit', [StokController::class, 'edit']);
+    Route::put('/{id}', [StokController::class, 'update']);
+    Route::delete('/{id}', [StokController::class, 'destroy']);
+});
+
+// Sales Route
+Route::group(['prefix' => 'sales'], function() {
+    Route::get('/', [SalesController::class, 'index']);
+    Route::post('/list', [SalesController::class, 'list']);
+    Route::get('/create', [SalesController::class, 'create']);
+    Route::post('/', [SalesController::class, 'store']);
+    Route::get('/{id}', [SalesController::class, 'show']);
+    Route::get('/{id}/edit', [SalesController::class, 'edit']);
+    Route::put('/{id}', [SalesController::class, 'update']);
+    Route::delete('/{id}', [SalesController::class, 'destroy']);
+});
+
+Route::get('login', [AuthController::class, 'index'])->name('login');
+Route::get('register', [AuthController::class, 'register'])->name('register');
+Route::post('proses_login', [AuthController::class, 'proses_login'])->name('proses_login');
+Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('proses_register', [AuthController::class, 'proses_register'])->name('proses_register');
+
+// Grup middleware 'auth' untuk melindungi route admin dan manager
+Route::group(['middleware' => ['auth']], function () {
+
+    Route::group(['middleware' => ['cek_login:1']], function () {
+        Route::resource('admin', AdminController::class);
+    });
+
+    Route::group(['middleware' => ['cek_login:2']], function () {
+        Route::resource('manager', ManagerController::class);
+    });
 });
