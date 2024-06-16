@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -12,18 +13,78 @@ class PenjualanSeeder extends Seeder
      */
     public function run(): void
     {
-        $user_ids = DB::table('m_user')->pluck('user_id')->toArray();
-
-        $data = [];
-        for ($i = 0; $i < 10; $i++) {
-            $data[] = [
-                'user_id' => $user_ids[array_rand($user_ids)],
-                'pembeli' => 'Customer ' . ($i + 1),
-                'penjualan_kode' => 'PJ' . str_pad($i + 1, 4, '0', STR_PAD_LEFT),
-                'penjualan_tanggal' => now(),
-            ];
-        }
-
+        $data = [
+            [
+                'penjualan_id' => 1,
+                'user_id' => 1,
+                'pembeli' => 'yanuar',
+                'penjualan_kode' => 'INV/20210101/1',
+                'penjualan_tanggal' => '2021-01-01',
+            ],
+            [
+                'penjualan_id' => 2,
+                'user_id' => 1,
+                'pembeli' => 'yanuar',
+                'penjualan_kode' => 'INV/20210101/2',
+                'penjualan_tanggal' => '2021-01-01',
+            ],
+            [
+                'penjualan_id' => 3,
+                'user_id' => 1,
+                'pembeli' => 'yanuar',
+                'penjualan_kode' => 'INV/20210101/3',
+                'penjualan_tanggal' => '2021-01-01',
+            ],
+            [
+                'penjualan_id' => 4,
+                'user_id' => 1,
+                'pembeli' => 'yanuar',
+                'penjualan_kode' => 'INV/20210101/4',
+                'penjualan_tanggal' => '2021-01-01',
+            ],
+            [
+                'penjualan_id' => 5,
+                'user_id' => 1,
+                'pembeli' => 'yanuar',
+                'penjualan_kode' => 'INV/20210101/5',
+                'penjualan_tanggal' => '2021-01-01',
+            ],
+            [
+                'penjualan_id' => 6,
+                'user_id' => 1,
+                'pembeli' => 'yanuar',
+                'penjualan_kode' => 'INV/20210101/6',
+                'penjualan_tanggal' => '2021-01-01',
+            ],
+            [
+                'penjualan_id' => 7,
+                'user_id' => 1,
+                'pembeli' => 'yanuar',
+                'penjualan_kode' => 'INV/20210101/7',
+                'penjualan_tanggal' => '2021-01-01',
+            ],
+            [
+                'penjualan_id' => 8,
+                'user_id' => 1,
+                'pembeli' => 'yanuar',
+                'penjualan_kode' => 'INV/20210101/8',
+                'penjualan_tanggal' => '2021-01-01',
+            ],
+            [
+                'penjualan_id' => 9,
+                'user_id' => 1,
+                'pembeli' => 'yanuar',
+                'penjualan_kode' => 'INV/20210101/9',
+                'penjualan_tanggal' => '2021-01-01',
+            ],
+            [
+                'penjualan_id' => 10,
+                'user_id' => 1,
+                'pembeli' => 'yanuar',
+                'penjualan_kode' => 'INV/20210101/10',
+                'penjualan_tanggal' => '2021-01-01',
+            ],
+        ];
         DB::table('t_penjualan')->insert($data);
     }
 }
